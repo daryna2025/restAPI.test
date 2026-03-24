@@ -55,23 +55,50 @@ namespace restAPI.Controllers
 
         }
 
-            //lisää uusi tuote tietokantaan
-            [HttpPost]
+        //lisää uusi tuote tietokantaan
+        [HttpPost]
 
-            public ActionResult AddNew([FromBody] Product prod)
+        public ActionResult AddNew([FromBody] Product prod)
 
+        {
+            try
             {
-                try
-                {
-                    db.Products.Add(prod);
-                    db.SaveChanges();
-                    return Ok($"Lisättiin uusi tuote {prod.ProductName} and {prod.QuantityPerUnit}");
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest("Tapahtui virhe. Lue lisää: " + ex.InnerException);
-                }
+                db.Products.Add(prod);
+                db.SaveChanges();
+                return Ok($"Lisättiin uusi tuote {prod.ProductName} and {prod.QuantityPerUnit}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Tapahtui virhe. Lue lisää: " + ex.InnerException);
             }
         }
+        //poistaa tuotteen id:n perusteella
+        [HttpDelete("{id}")]
+
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var product = db.Products.Find(id);
+                if (product != null)
+                {
+                    db.Products.Remove(product);
+                    db.SaveChanges();
+                    return Ok($"Tuote id:llä {id} on poistettu.");
+                }
+                else
+                {
+                    return NotFound($"Tuote id:llä {id} ei löydy.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Tapahtui virhe. Lue lisää: " + ex.InnerException);
+            }
+
+        }
     }
+}
+
+    
 
