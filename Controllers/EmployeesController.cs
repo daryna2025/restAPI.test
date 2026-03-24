@@ -46,6 +46,30 @@ namespace restAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        //hakee työntekijän id:n perusteella
+        [HttpGet("{id}")]
+        public ActionResult GetOneEmployeeById(int id)
+        {
+            try
+            {
+                var työnt = db.Employees.Find(id);
+                if (työnt != null)
+                {
+                    return Ok(työnt);
+                }
+                else
+                {
+                    return NotFound($"Työntekijän id:llä {id} ei löydy.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Tapahtui virhe. Lue lisää: " + ex.InnerException);
+            }
+
+        }
+
+
 
     }
 }
