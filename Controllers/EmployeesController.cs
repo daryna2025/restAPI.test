@@ -32,5 +32,20 @@ namespace restAPI.Controllers
 
         }
 
+        //hakee employeen kaupungin perusteella
+        [HttpGet("city/{cname}")]
+        public ActionResult GetByCity(string cname)
+        {
+            try
+            {
+                var kaupunki = db.Employees.Where(c => c.City.Contains(cname));
+                return Ok(kaupunki);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
