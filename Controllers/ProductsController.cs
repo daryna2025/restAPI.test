@@ -45,7 +45,7 @@ namespace restAPI.Controllers
                 }
                 else
                 {
-                    return NotFound($"Tuoteet id:llä {id} ei löydy."); //string interpolation -tapa;
+                    return NotFound($"Tuoteet id:llä {id} ei löydy."); 
                 }
             }
             catch (Exception ex)
