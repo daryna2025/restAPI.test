@@ -97,8 +97,54 @@ namespace restAPI.Controllers
             }
 
         }
+        //tuote muokkaaminen ja JSON-muodossa lähetettävän tuote-olion esimerkki:
+        //      {
+        //"productId": 77,
+        //"productName": "UUSI",
+        //"supplierId": 12,
+        //"categoryId": 2,
+        //"quantityPerUnit": "string",
+        //"unitPrice": 0,
+        //"unitsInStock": 0,
+        //"unitsOnOrder": 0,
+        //"reorderLevel": 0,
+        //"discontinued": true
+        //}
+
+        [HttpPut("{id}")]
+        public ActionResult EditTuote(int id, [FromBody] Product tuote)
+        {
+            try
+            {
+                var product = db.Products.Find(id);
+                if (product != null)
+                {
+                    product.ProductName = tuote.ProductName;
+                    product.SupplierId = tuote.SupplierId;
+                    product.CategoryId = tuote.CategoryId;
+                    product.QuantityPerUnit = tuote.QuantityPerUnit;
+                    product.UnitPrice = tuote.UnitPrice;
+                    product.UnitsInStock = tuote.UnitsInStock;
+                    product.UnitsOnOrder = tuote.UnitsOnOrder;
+                    product.ReorderLevel = tuote.ReorderLevel;
+                    product.Discontinued = tuote.Discontinued;
+                    product.ImageLink = tuote.ImageLink;
+                    db.SaveChanges();
+                    return Ok($"Tuote id:llä {id} on päivitetty.");
+                }
+                else
+                {
+                    return NotFound($"Tuote id:llä {id} ei löydy.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Tapahtui virhe. Lue lisää: " + ex.InnerException);
+            }
+        }
     }
 }
+
 
     
 
