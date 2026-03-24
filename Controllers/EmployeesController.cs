@@ -68,6 +68,46 @@ namespace restAPI.Controllers
             }
 
         }
+        //employee muokaminen id:n perusteella
+        [HttpPut("{id}")]
+        public ActionResult EditEmployee(int id, [FromBody] Employee tekijä)
+        {
+            try
+            {
+                var employee = db.Employees.Find(id);
+                if (employee != null)
+                {
+                    employee.LastName = tekijä.LastName;
+                    employee.FirstName = tekijä.FirstName;
+                    employee.Title = tekijä.Title;
+                    employee.TitleOfCourtesy = tekijä.TitleOfCourtesy;
+                    employee.BirthDate = tekijä.BirthDate;
+                    employee.HireDate = tekijä.HireDate;
+                    employee.Address = tekijä.Address;
+                    employee.City = tekijä.City;
+                    employee.Region = tekijä.Region;
+                    employee.PostalCode = tekijä.PostalCode;
+                    employee.Country = tekijä.Country;
+                    employee.HomePhone = tekijä.HomePhone;
+                    employee.Extension = tekijä.Extension;
+                    employee.Photo = tekijä.Photo;
+                    employee.Notes = tekijä.Notes;
+                    employee.ReportsTo = tekijä.ReportsTo;
+                    employee.PhotoPath = tekijä.PhotoPath;
+
+                    db.SaveChanges();
+                    return Ok($"Työntekijän id:llä {id} on päivitetty.");
+                }
+                else
+                {
+                    return NotFound($"Työntekijän id:llä {id} ei löydy.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Tapahtui virhe. Lue lisää: " + ex.InnerException);
+            }
+        }
 
 
 

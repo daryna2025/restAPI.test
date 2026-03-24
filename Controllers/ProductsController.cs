@@ -124,7 +124,7 @@ namespace restAPI.Controllers
         //"reorderLevel": 0,
         //"discontinued": true
         //}
-
+        
         [HttpPut("{id}")]
         public ActionResult EditTuote(int id, [FromBody] Product tuote)
         {
