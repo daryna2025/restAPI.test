@@ -54,6 +54,20 @@ namespace restAPI.Controllers
             }
 
         }
+        //hakee tuotet tietokannasta tuotteen nimen 
+        [HttpGet("companyname/{cname}")]
+        public ActionResult GetByName(string cname)
+        {
+            try
+            {
+                var prod = db.Products.Where(c => c.ProductName.Contains(cname));
+                  return Ok(prod);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         //lisää uusi tuote tietokantaan
         [HttpPost]
